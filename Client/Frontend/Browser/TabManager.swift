@@ -477,7 +477,6 @@ class TabManager: NSObject, FeatureFlagsProtocol {
         guard let index = tabs.firstIndex(where: { $0 === tab }) else { return }
         removeTab(tab, flushToDisk: true)
         updateIndexAfterRemovalOf(tab, deletedIndex: index)
-        hideNetworkActivitySpinner()
 
         TelemetryWrapper.recordEvent(
             category: .action,
@@ -683,7 +682,7 @@ class TabManager: NSObject, FeatureFlagsProtocol {
 }
 
 extension TabManager {
-    fileprivate func saveTabs(toProfile profile: Profile, _ tabs: [Tab]) {
+    fileprivate func saveTabs(toProfile profile: Profile, _ tabs: [Tab], writeCompletion: (() -> Void)? = nil) {
         // It is possible that not all tabs have loaded yet, so we filter out tabs with a nil URL.
         let storedTabs: [RemoteTab] = tabs.compactMap( Tab.toRemoteTab )
 
@@ -691,12 +690,25 @@ extension TabManager {
         // work like querying for top sites.
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
             profile.storeTabs(storedTabs)
+            writeCompletion?()
         }
     }
 
-    @discardableResult func storeChanges() -> Success {
-        saveTabs(toProfile: profile, normalTabs)
-        return store.preserveTabs(tabs, selectedTab: selectedTab)
+    func storeChanges(writeCompletion: (() -> Void)? = nil) {
+        let group = DispatchGroup()
+        group.enter()
+        saveTabs(toProfile: profile, normalTabs) {
+            group.leave()
+        }
+
+        group.enter()
+        store.preserveTabs(tabs, selectedTab: selectedTab) {
+            group.leave()
+        }
+
+        group.notify(queue: .main) {
+            writeCompletion?()
+        }
     }
 
     func hasTabsToRestoreAtStartup() -> Bool {
@@ -854,7 +866,6 @@ extension TabManager: WKNavigationDelegate {
 
     // Note the main frame JSContext (i.e. document, window) is not available yet.
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
 
         if let tab = self[webView], let blocker = tab.contentBlocker {
             blocker.clearPageStats()
@@ -872,7 +883,6 @@ extension TabManager: WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        hideNetworkActivitySpinner()
         // tab restore uses internal pages, so don't call storeChanges unnecessarily on startup
         if let url = webView.url {
             if let internalUrl = InternalURL(url), internalUrl.isSessionRestore {
@@ -881,17 +891,6 @@ extension TabManager: WKNavigationDelegate {
 
             storeChanges()
         }
-    }
-
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        hideNetworkActivitySpinner()
-    }
-
-    func hideNetworkActivitySpinner() {
-        for tab in tabs where tab.webView?.isLoading == true {
-            return
-        }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 
     /// Called when the WKWebView's content process has gone away. If this happens for the currently selected tab
