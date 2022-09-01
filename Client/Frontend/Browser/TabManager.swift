@@ -51,6 +51,7 @@ class TabManager: NSObject, FeatureFlaggable, TabManagerProtocol {
     private let store: TabManagerStore
     private let profile: Profile
     private var isRestoringTabs = false
+    var isStartAtHomeState = false
     private(set) var tabs = [Tab]()
     private var _selectedIndex = -1
     var selectedIndex: Int { return _selectedIndex }
@@ -823,6 +824,8 @@ class TabManager: NSObject, FeatureFlaggable, TabManagerProtocol {
         guard !startAtHomeManager.shouldSkipStartHome else { return }
 
         if startAtHomeManager.shouldStartAtHome() {
+            print("YRD setting to true startAtHome")
+            isStartAtHomeState = true
             let wasLastSessionPrivate = selectedTab?.isPrivate ?? false
             let scannableTabs = wasLastSessionPrivate ? privateTabs : normalTabs
             let existingHomeTab = startAtHomeManager.scanForExistingHomeTab(in: scannableTabs,

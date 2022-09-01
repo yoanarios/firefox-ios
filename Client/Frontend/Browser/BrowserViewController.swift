@@ -69,7 +69,7 @@ class BrowserViewController: UIViewController {
     var findInPageBar: FindInPageBar?
     lazy var mailtoLinkHandler = MailtoLinkHandler()
     var urlFromAnotherApp: UrlToOpenModel?
-    var isCrashAlertShowing: Bool = false
+    var isCrashAlertShowing = false
     var currentMiddleButtonState: MiddleButtonState?
     fileprivate var customSearchBarButton: UIBarButtonItem?
     var updateState: TabUpdateState = .coldStart
@@ -983,15 +983,7 @@ class BrowserViewController: UIViewController {
         }
 
         if isAboutHomeURL {
-            showHomepage(inline: true)
-
-            if userHasPressedHomeButton {
-                userHasPressedHomeButton = false
-
-            } else if focusUrlBar && !contextHintVC.shouldPresentHint() {
-                enterOverlayMode()
-            }
-
+            handleIsAboutHome(focusUrlBar)
         } else if !url.absoluteString.hasPrefix("\(InternalURL.baseUrl)/\(SessionRestoreHandler.path)") {
             hideHomepage()
             urlBar.shouldHideReloadButton(shouldUseiPadSetup())
@@ -999,6 +991,28 @@ class BrowserViewController: UIViewController {
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             topTabsViewController?.refreshTabs()
+        }
+    }
+
+    private func handleIsAboutHome(_ focusUrlBar: Bool) {
+        print("YRD updateInContentHomePanel focus: \(focusUrlBar)")
+        showHomepage(inline: true)
+
+        guard !userHasPressedHomeButton else {
+            print("YRD userHasPressedHomeButton")
+            userHasPressedHomeButton = false
+            return
+        }
+
+        guard !tabManager.isStartAtHomeState else {
+            print("YRD isStartAtHome")
+            tabManager.isStartAtHomeState = false
+            return
+        }
+
+        if focusUrlBar && !contextHintVC.shouldPresentHint() {
+            print("YRD enterOverlayMode")
+            enterOverlayMode()
         }
     }
 
@@ -1299,17 +1313,17 @@ class BrowserViewController: UIViewController {
         updateURLBarDisplayURL(tab)
         scrollController.showToolbars(animated: false)
 
-        if let url = tab.url {
-            if url.isReaderModeURL {
-                showReaderModeBar(animated: false)
-                NotificationCenter.default.addObserver(self, selector: #selector(dynamicFontChanged), name: .DynamicFontChanged, object: nil)
-            } else {
-                hideReaderModeBar(animated: false)
-                NotificationCenter.default.removeObserver(self, name: .DynamicFontChanged, object: nil)
-            }
+        guard let url = tab.url else { return }
 
-            updateInContentHomePanel(url as URL, focusUrlBar: focusUrlBar)
+        if url.isReaderModeURL {
+            showReaderModeBar(animated: false)
+            NotificationCenter.default.addObserver(self, selector: #selector(dynamicFontChanged), name: .DynamicFontChanged, object: nil)
+        } else {
+            hideReaderModeBar(animated: false)
+            NotificationCenter.default.removeObserver(self, name: .DynamicFontChanged, object: nil)
         }
+
+        updateInContentHomePanel(url as URL, focusUrlBar: focusUrlBar)
     }
 
     /// Updates the URL bar text and button states.
