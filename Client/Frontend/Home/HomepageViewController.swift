@@ -50,6 +50,13 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
         stackView.axis = .vertical
     }
 
+    private lazy var cfrReferenceView: UIView = {
+        let cfrView = UIView(frame: statusBarFrame ?? CGRect.zero)
+        cfrView.backgroundColor = .clear
+        view.addSubview(cfrView)
+        return cfrView
+    }()
+
     var currentTab: Tab? {
         return tabManager.selectedTab
     }
@@ -388,8 +395,15 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
               !viewModel.shouldDisplayHomeTabBanner
         else { return }
 
+        // Use
+        var rect = headerView.convert(headerView.titleLabel.frame, to: collectionView)
+        rect = collectionView.convert(rect, to: view)
+        cfrReferenceView.frame = rect
+        cfrReferenceView.backgroundColor = .green
+        collectionView.bringSubviewToFront(cfrReferenceView)
+
         jumpBackInContextualHintViewController.configure(
-            anchor: headerView.titleLabel,
+            anchor: cfrReferenceView,
             withArrowDirection: .down,
             andDelegate: self,
             presentedUsing: { self.presentContextualHint(contextualHintViewController: self.jumpBackInContextualHintViewController) },
