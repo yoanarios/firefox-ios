@@ -104,7 +104,6 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 
-//        moreButton.isHidden = true
         moreButton.setTitle(nil, for: .normal)
         moreButton.accessibilityIdentifier = nil
         titleLabel.text = nil
@@ -137,7 +136,6 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
     }
 
     private func adjustLayout() {
-        print("YRD adjustLayout")
         let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         if contentSizeCategory.isAccessibilityCategory {

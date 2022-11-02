@@ -51,8 +51,7 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
     }
 
     private lazy var cfrReferenceView: UIView = {
-        let cfrView = UIView(frame: statusBarFrame ?? CGRect.zero)
-        cfrView.backgroundColor = .clear
+        let cfrView = UIView(frame: CGRect.zero)
         view.addSubview(cfrView)
         return cfrView
     }()
@@ -390,15 +389,11 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
 
     // MARK: - Contextual hint
 
-    private func udpateCFRView(for pinView: UIView) {
-        print("YRD view frame \(pinView.frame)")
+    private func udpateReferenceViewFrame(for pinView: UIView) {
         var rect = pinView.convert(pinView.frame, to: collectionView)
-        print("YRD rect frame1 \(rect)")
         rect = collectionView.convert(rect, to: view)
-        print("YRD rect frame2 \(rect)")
         cfrReferenceView.frame = rect
-        cfrReferenceView.backgroundColor = .green
-        collectionView.bringSubviewToFront(cfrReferenceView)
+        cfrReferenceView.backgroundColor = .red
     }
 
     private func prepareJumpBackInContextualHint(onView headerView: LabelButtonHeaderView) {
@@ -406,7 +401,7 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
               !viewModel.shouldDisplayHomeTabBanner
         else { return }
 
-//        udpateCFRView(for: headerView.titleLabel)
+        udpateReferenceViewFrame(for: headerView.titleLabel)
 
         jumpBackInContextualHintViewController.configure(
             anchor: cfrReferenceView,
@@ -414,6 +409,7 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
             andDelegate: self,
             presentedUsing: { self.presentContextualHint(contextualHintViewController: self.jumpBackInContextualHintViewController) },
             withActionBeforeAppearing: { self.contextualHintPresented(type: .jumpBackIn) },
+            actionOnDismiss: { self.cfrReferenceView.removeFromSuperview() },
             andActionForButton: { self.openTabsSettings() })
     }
 
@@ -461,7 +457,6 @@ extension HomepageViewController: UICollectionViewDelegate, UICollectionViewData
         // Jump back in header specific setup
         if sectionViewModel.sectionType == .jumpBackIn {
             viewModel.jumpBackInViewModel.sendImpressionTelemetry()
-            udpateCFRView(for: headerView.titleLabel)
             prepareJumpBackInContextualHint(onView: headerView)
         }
 
