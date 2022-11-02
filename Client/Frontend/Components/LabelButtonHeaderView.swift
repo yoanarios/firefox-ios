@@ -5,8 +5,6 @@
 import UIKit
 
 struct LabelButtonHeaderViewModel {
-    var leadingInset: CGFloat = 0
-    var trailingInset: CGFloat = HomepageViewModel.UX.standardInset
     var title: String?
     var titleA11yIdentifier: String?
     var isButtonHidden: Bool
@@ -29,6 +27,8 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
         static let inBetweenSpace: CGFloat = 12
         static let bottomSpace: CGFloat = 10
         static let bottomButtonSpace: CGFloat = 6
+        static let leadingInset: CGFloat = 0
+        static let trailingInset: CGFloat = HomepageViewModel.UX.standardInset
     }
 
     // MARK: - UIElements
@@ -67,22 +67,25 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(moreButton)
-        addSubview(stackView)
 
+        setupLayout()
+        applyTheme()
         adjustLayout()
         setupNotifications(forObserver: self,
                            observing: [.DynamicFontChanged])
     }
 
-    func setConstraints(viewModel: LabelButtonHeaderViewModel) {
+    private func setupLayout() {
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(moreButton)
+        addSubview(stackView)
+
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
-                                               constant: viewModel.leadingInset),
-            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,
-                                                constant: -viewModel.trailingInset),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor,
+                                               constant: UX.leadingInset),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor,
+                                                constant: -UX.trailingInset),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UX.bottomSpace),
         ])
 
@@ -100,7 +103,8 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
     // MARK: - Helper functions
     override func prepareForReuse() {
         super.prepareForReuse()
-        moreButton.isHidden = true
+
+//        moreButton.isHidden = true
         moreButton.setTitle(nil, for: .normal)
         moreButton.accessibilityIdentifier = nil
         titleLabel.text = nil
@@ -120,8 +124,7 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
             moreButton.accessibilityIdentifier = viewModel.buttonA11yIdentifier
         }
 
-        setConstraints(viewModel: viewModel)
-        applyTheme(theme: theme)
+        applyTheme()
     }
 
     // MARK: - Dynamic Type Support
@@ -134,6 +137,7 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
     }
 
     private func adjustLayout() {
+        print("YRD adjustLayout")
         let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 
         if contentSizeCategory.isAccessibilityCategory {

@@ -535,8 +535,8 @@ extension TabDisplayManager: UICollectionViewDataSource {
                                                                       withReuseIdentifier: GridTabViewController.independentTabsHeaderIdentifier,
                                                                       for: indexPath) as? LabelButtonHeaderView {
 
-            let viewModel = LabelButtonHeaderViewModel(leadingInset: 15,
-                                                       title: .TabTrayOtherTabsSectionHeader,
+            // TODO: Yoana fix this
+            let viewModel = LabelButtonHeaderViewModel(title: .TabTrayOtherTabsSectionHeader,
                                                        titleA11yIdentifier: AccessibilityIdentifiers.TabTray.filteredTabs,
                                                        isButtonHidden: true)
 

@@ -390,17 +390,23 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
 
     // MARK: - Contextual hint
 
+    private func udpateCFRView(for pinView: UIView) {
+        print("YRD view frame \(pinView.frame)")
+        var rect = pinView.convert(pinView.frame, to: collectionView)
+        print("YRD rect frame1 \(rect)")
+        rect = collectionView.convert(rect, to: view)
+        print("YRD rect frame2 \(rect)")
+        cfrReferenceView.frame = rect
+        cfrReferenceView.backgroundColor = .green
+        collectionView.bringSubviewToFront(cfrReferenceView)
+    }
+
     private func prepareJumpBackInContextualHint(onView headerView: LabelButtonHeaderView) {
         guard jumpBackInContextualHintViewController.shouldPresentHint(),
               !viewModel.shouldDisplayHomeTabBanner
         else { return }
 
-        // Use
-        var rect = headerView.convert(headerView.titleLabel.frame, to: collectionView)
-        rect = collectionView.convert(rect, to: view)
-        cfrReferenceView.frame = rect
-        cfrReferenceView.backgroundColor = .green
-        collectionView.bringSubviewToFront(cfrReferenceView)
+//        udpateCFRView(for: headerView.titleLabel)
 
         jumpBackInContextualHintViewController.configure(
             anchor: cfrReferenceView,
@@ -455,6 +461,7 @@ extension HomepageViewController: UICollectionViewDelegate, UICollectionViewData
         // Jump back in header specific setup
         if sectionViewModel.sectionType == .jumpBackIn {
             viewModel.jumpBackInViewModel.sendImpressionTelemetry()
+            udpateCFRView(for: headerView.titleLabel)
             prepareJumpBackInContextualHint(onView: headerView)
         }
 
