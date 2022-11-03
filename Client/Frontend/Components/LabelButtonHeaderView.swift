@@ -5,6 +5,7 @@
 import UIKit
 
 struct LabelButtonHeaderViewModel {
+    var leadingInset: CGFloat = 0
     var title: String?
     var titleA11yIdentifier: String?
     var isButtonHidden: Bool
@@ -63,6 +64,7 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
 
     private var viewModel: LabelButtonHeaderViewModel?
     var notificationCenter: NotificationProtocol = NotificationCenter.default
+    private var stackViewLeadingConstraint: NSLayoutConstraint!
 
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -80,10 +82,11 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
         stackView.addArrangedSubview(moreButton)
         addSubview(stackView)
 
+        stackViewLeadingConstraint = stackView.leadingAnchor.constraint(equalTo: leadingAnchor,
+                                                                        constant: UX.leadingInset)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor,
-                                               constant: UX.leadingInset),
+            stackViewLeadingConstraint,
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor,
                                                 constant: -UX.trailingInset),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UX.bottomSpace),
@@ -115,6 +118,8 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
 
         title = viewModel.title
         titleLabel.accessibilityIdentifier = viewModel.titleA11yIdentifier
+        // Update constant value for `TabDisplayManager` usage that is not using Section inset
+        stackViewLeadingConstraint?.constant = viewModel.leadingInset
 
         moreButton.isHidden = viewModel.isButtonHidden
         if !viewModel.isButtonHidden {
@@ -127,14 +132,6 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
     }
 
     // MARK: - Dynamic Type Support
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if previousTraitCollection?.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory {
-            adjustLayout()
-        }
-    }
-
     private func adjustLayout() {
         let contentSizeCategory = UIApplication.shared.preferredContentSizeCategory
 

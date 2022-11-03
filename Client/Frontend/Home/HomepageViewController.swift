@@ -7,6 +7,7 @@ import UIKit
 import Storage
 import SyncTelemetry
 import MozillaAppServices
+import SwiftUI
 
 class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, Themeable {
 
@@ -389,11 +390,11 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
 
     // MARK: - Contextual hint
 
-    private func udpateReferenceViewFrame(for pinView: UIView) {
-        var rect = pinView.convert(pinView.frame, to: collectionView)
-        rect = collectionView.convert(rect, to: view)
+    private func updateReferenceViewFrame(for pinView: UIView) {
+        var rect = pinView.convert(pinView.bounds, to: collectionView)
+        // Subtracting standard inset
+        rect.origin.y -= HomepageViewModel.UX.standardInset
         cfrReferenceView.frame = rect
-        cfrReferenceView.backgroundColor = .red
     }
 
     private func prepareJumpBackInContextualHint(onView headerView: LabelButtonHeaderView) {
@@ -401,7 +402,7 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
               !viewModel.shouldDisplayHomeTabBanner
         else { return }
 
-        udpateReferenceViewFrame(for: headerView.titleLabel)
+        updateReferenceViewFrame(for: headerView.titleLabel)
 
         jumpBackInContextualHintViewController.configure(
             anchor: cfrReferenceView,

@@ -536,7 +536,8 @@ extension TabDisplayManager: UICollectionViewDataSource {
                                                                       for: indexPath) as? LabelButtonHeaderView {
 
             // TODO: Yoana fix this
-            let viewModel = LabelButtonHeaderViewModel(title: .TabTrayOtherTabsSectionHeader,
+            let viewModel = LabelButtonHeaderViewModel(leadingInset: 15,
+                                                       title: .TabTrayOtherTabsSectionHeader,
                                                        titleA11yIdentifier: AccessibilityIdentifiers.TabTray.filteredTabs,
                                                        isButtonHidden: true)
 
