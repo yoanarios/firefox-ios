@@ -71,7 +71,6 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
         super.init(frame: frame)
 
         setupLayout()
-        applyTheme()
         adjustLayout()
         setupNotifications(forObserver: self,
                            observing: [.DynamicFontChanged])
@@ -92,7 +91,8 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -UX.bottomSpace),
         ])
 
-        moreButton.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        titleLabel.setContentCompressionResistancePriority(UILayoutPriority(751), for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -128,7 +128,7 @@ class LabelButtonHeaderView: UICollectionReusableView, ReusableCell {
             moreButton.accessibilityIdentifier = viewModel.buttonA11yIdentifier
         }
 
-        applyTheme()
+        applyTheme(theme: theme)
     }
 
     // MARK: - Dynamic Type Support

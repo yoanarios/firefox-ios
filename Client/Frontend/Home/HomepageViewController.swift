@@ -392,9 +392,11 @@ class HomepageViewController: UIViewController, HomePanel, FeatureFlaggable, The
 
     private func updateReferenceViewFrame(for pinView: UIView) {
         var rect = pinView.convert(pinView.bounds, to: collectionView)
+        rect = collectionView.convert(rect, to: view)
         // Subtracting standard inset
         rect.origin.y -= HomepageViewModel.UX.standardInset
         cfrReferenceView.frame = rect
+        cfrReferenceView.backgroundColor = .red
     }
 
     private func prepareJumpBackInContextualHint(onView headerView: LabelButtonHeaderView) {
