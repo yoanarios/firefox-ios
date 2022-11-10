@@ -76,6 +76,74 @@
       "proposedEnrollment": 24,
       "referenceBranch": "control",
       "featureValidationOptOut": false
+    },
+    {
+      "appId": "org.mozilla.ios.Firefox",
+      "appName": "firefox_ios",
+      "application": "org.mozilla.ios.Firefox",
+      "arguments": {},
+      "branches": [
+        {
+          "feature": {
+            "enabled": true,
+            "featureId": "messaging",
+            "value": {
+              "actions": {},
+              "message-under-experiment": "viewpoint-invitation-message",
+              "messages": {
+                "default-browser": {
+                  "action": "MAKE_DEFAULT_BROWSER_WITH_TUTORIAL",
+                  "button-label": "Take survey",
+                  "style": "SURVEY",
+                  "text": "Please help Firefox by taking this short survey",
+                  "trigger": [
+                      "I_AM_NOT_DEFAULT_BROWSER",
+                  "SUPPORTS_DEFAULT_BROWSER"
+                  ]
+                }
+              },
+              "on-control": "show-next-message",
+              "styles": {},
+              "triggers": {}
+            }
+          },
+          "ratio": 1,
+          "slug": "control-a"
+        }
+      ],
+      "bucketConfig": {
+        "count": 10000,
+        "namespace": "ios-messaging-release-1",
+        "randomizationUnit": "nimbus_id",
+        "start": 0,
+        "total": 10000
+      },
+      "channel": "developer",
+      "endDate": null,
+      "enrollmentEndDate": null,
+      "featureIds": [
+        "messaging"
+      ],
+      "id": "viewpoint-survey-2022-sept-ios",
+      "isEnrollmentPaused": false,
+      "isRollout": false,
+      "outcomes": [
+        {
+          "priority": "primary",
+          "slug": "default_browser"
+        }
+      ],
+      "probeSets": [],
+      "proposedDuration": 8,
+      "proposedEnrollment": 8,
+      "referenceBranch": "control-a",
+      "schemaVersion": "1.9.0",
+      "slug": "viewpoint-survey-2022-sept-ios",
+      "startDate": null,
+      "targeting": "(app_version|versionCompare('101.!') >= 0) && (language in ['en'])",
+      "userFacingDescription": "Viewpoint is a longitudinal survey program that scientifically assesses attitudes about Firefox held among typical users.",
+      "userFacingName": "Viewpoint Survey (2022 Sept, iOS)"
     }
+
   ]
 }
