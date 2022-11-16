@@ -11,12 +11,17 @@ import XCTest
 /// This tests allow us to write code in Nimbus with some confidence that it will work here.
 class NimbusIntegrationTests: XCTestCase {
     func testStringBundleAccess() throws {
+        print("YRD Locale \(Locale.current)")
+        
         XCTAssertEqual(Locale.current.languageCode, "en")
         let stringWithNoTable = Strings.bundle.localizedString(forKey: "ShareExtension.OpenInFirefoxAction.Title", value: nil, table: nil)
         XCTAssertEqual(stringWithNoTable, "Open in Firefox")
 
         let stringWithTable = Strings.bundle.localizedString(forKey: "DefaultBrowserCard.Title", value: nil, table: "Default Browser")
         XCTAssertEqual(stringWithTable, "Switch Your Default Browser")
+
+        let buttonWithTable = Strings.bundle.localizedString(forKey: "DefaultBrowserCard.Button.v2", value: nil, table: "Default Browser")
+        XCTAssertEqual(buttonWithTable, "Learn How")
     }
 
     func testNSLocalizedStringAccess() throws {
