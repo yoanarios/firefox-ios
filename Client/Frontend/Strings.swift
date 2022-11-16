@@ -239,8 +239,8 @@ extension String {
                     lastUpdated: .unknown)
                 public static let HomeTabBannerButton = MZLocalizedString(
                     "DefaultBrowserCard.Button.v2",
-                    tableName: "Default Browser default",
-                    value: "Learn How",
+                    tableName: "Default Browser",
+                    value: "Learn How default",
                     comment: "Button string to learn how to set your default browser.",
                     lastUpdated: .unknown)
                 public static let HomeTabBannerCloseAccessibility = MZLocalizedString(

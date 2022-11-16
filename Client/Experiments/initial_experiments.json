@@ -93,9 +93,10 @@
               "messages": {
                 "default-browser": {
                   "action": "MAKE_DEFAULT_BROWSER_WITH_TUTORIAL",
-                  "button-label": "Take survey",
                   "style": "SURVEY",
-                  "text": "Please help Firefox by taking this short survey",
+                  "text": "Default Browser/DefaultBrowserCard.PeaceOfMind.Description.v108",
+                  "title": "Default Browser/DefaultBrowserCard.PeaceOfMind.Title.v108",
+                  "button-label": "Default Browser/DefaultBrowserCard.Button.v2",
                   "trigger": [
                       "I_AM_NOT_DEFAULT_BROWSER",
                   "SUPPORTS_DEFAULT_BROWSER"
