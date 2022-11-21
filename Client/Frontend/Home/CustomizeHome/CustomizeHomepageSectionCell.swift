@@ -17,7 +17,7 @@ class CustomizeHomepageSectionCell: UICollectionViewCell, ReusableCell {
 
     // MARK: - UI Elements
     private let goToSettingsButton: ActionButton = .build { button in
-        button.setTitle(.FirefoxHomepage.CustomizeHomepage.ButtonTitle, for: .normal)
+        button.setTitle(.FirefoxHomepage.HomeTabBanner.EvergreenMessage.HomeTabBannerButton, for: .normal)
         button.titleLabel?.font = DynamicFontHelper.defaultHelper.preferredBoldFont(withTextStyle: .subheadline,
                                                                                     size: UX.buttonFontSize)
         button.layer.cornerRadius = UX.buttonCornerRadius
