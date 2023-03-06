@@ -2351,6 +2351,10 @@
 		430170CC28B903CA007A163A /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/JumpBackIn.strings"; sourceTree = "<group>"; };
 		430170CD28B903CA007A163A /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/ToolbarLocation.strings"; sourceTree = "<group>"; };
 		430170CE28B903CA007A163A /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		4301D72F29B601D900144497 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Alerts.strings; sourceTree = "<group>"; };
+		4301D73029B601D900144497 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/JumpBackIn.strings; sourceTree = "<group>"; };
+		4301D73129B601D900144497 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/TabsTray.strings; sourceTree = "<group>"; };
+		4301D73229B601D900144497 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/ToolbarLocation.strings; sourceTree = "<group>"; };
 		4302DBD3293E0A9100978ADF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Alerts.strings; sourceTree = "<group>"; };
 		4302DBD4293E0A9100978ADF /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/TabsTray.strings; sourceTree = "<group>"; };
 		43041686293E0B3100BBFD8A /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Alerts.strings; sourceTree = "<group>"; };
@@ -2622,6 +2626,9 @@
 		43BDEEC02947458800C2FD7E /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/ToolbarLocation.strings; sourceTree = "<group>"; };
 		43BE578A278BA4D900491291 /* RustMozillaAppServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RustMozillaAppServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		43BE578B278BA4D900491291 /* RustMozillaAppServices-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RustMozillaAppServices-Info.plist"; sourceTree = "<group>"; };
+		43C2EFA429B6051D00CAA5AE /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = "fil.lproj/Default Browser.strings"; sourceTree = "<group>"; };
+		43C2EFA529B6051D00CAA5AE /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Today.strings; sourceTree = "<group>"; };
+		43C2EFA629B6051D00CAA5AE /* fil */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fil; path = fil.lproj/Localizable.strings; sourceTree = "<group>"; };
 		43C335E028B39F6500858209 /* ta */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ta; path = ta.lproj/BookmarkPanel.strings; sourceTree = "<group>"; };
 		43C55939293E0B0C0086BEDD /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Alerts.strings; sourceTree = "<group>"; };
 		43C5593A293E0B0C0086BEDD /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/TabsTray.strings; sourceTree = "<group>"; };
@@ -11448,6 +11455,7 @@
 				D4BF6AB92893DDAA001B5130 /* en-US */,
 				43DC31A228B39F100034E6DF /* si */,
 				437C672E28D88484001A5C31 /* be */,
+				43C2EFA529B6051D00CAA5AE /* fil */,
 			);
 			name = Today.strings;
 			sourceTree = "<group>";
@@ -11613,6 +11621,7 @@
 				43509CB3291BF65400DF631E /* fi */,
 				439A258729225CF90057D0E1 /* sq */,
 				43DEE39F296C2CD600D13D0A /* ca */,
+				4301D73029B601D900144497 /* cs */,
 			);
 			name = JumpBackIn.strings;
 			sourceTree = "<group>";
@@ -11676,6 +11685,7 @@
 				439A258929225CF90057D0E1 /* sq */,
 				43BDEEC02947458800C2FD7E /* th */,
 				43DEE3A2296C2CD600D13D0A /* ca */,
+				4301D73229B601D900144497 /* cs */,
 			);
 			name = ToolbarLocation.strings;
 			sourceTree = "<group>";
@@ -11739,6 +11749,7 @@
 				437904F2297EA28D00131AB5 /* br */,
 				4388E276297EA2E5005FFEFD /* dsb */,
 				43B0EC51297EA4AE00491FA7 /* ko */,
+				4301D72F29B601D900144497 /* cs */,
 			);
 			name = Alerts.strings;
 			sourceTree = "<group>";
@@ -11802,6 +11813,7 @@
 				437904F3297EA28D00131AB5 /* br */,
 				4388E278297EA2E6005FFEFD /* dsb */,
 				43B0EC52297EA4AE00491FA7 /* ko */,
+				4301D73129B601D900144497 /* cs */,
 			);
 			name = TabsTray.strings;
 			sourceTree = "<group>";
@@ -12871,6 +12883,7 @@
 				A85F9E50289A4C9800DCBF19 /* be */,
 				43DC319E28B39F100034E6DF /* si */,
 				43DC2B0928B9073300A03AA2 /* uz */,
+				43C2EFA429B6051D00CAA5AE /* fil */,
 			);
 			name = "Default Browser.strings";
 			sourceTree = "<group>";
@@ -13455,6 +13468,7 @@
 				43DC31A628B39F100034E6DF /* si */,
 				430170CE28B903CA007A163A /* en-US */,
 				437C673128D88484001A5C31 /* be */,
+				43C2EFA629B6051D00CAA5AE /* fil */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
