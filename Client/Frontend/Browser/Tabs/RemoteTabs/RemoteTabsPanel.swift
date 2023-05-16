@@ -73,7 +73,6 @@ class RemoteTabsPanel: UIViewController, Themeable {
         tableViewController.tableView.backgroundColor =  themeManager.currentTheme.colors.layer3
         tableViewController.tableView.separatorColor = themeManager.currentTheme.colors.borderPrimary
         tableViewController.tableView.reloadData()
-        tableViewController.refreshTabs()
     }
 
     func forceRefreshTabs() {
@@ -85,7 +84,7 @@ class RemoteTabsPanel: UIViewController, Themeable {
         switch notification.name {
         case .FirefoxAccountChanged, .ProfileDidFinishSyncing:
             DispatchQueue.main.async {
-                self.tableViewController.refreshTabs()
+                self.tableViewController.updateDelegateClientAndTabData()
             }
             break
         default:
@@ -113,6 +112,7 @@ class RemoteTabsTableViewController: UITableViewController, Themeable {
     var themeManager: ThemeManager
     var themeObserver: NSObjectProtocol?
     var notificationCenter: NotificationProtocol
+    private var clientAndTabs = [ClientAndTabs]()
     var tableViewDelegate: RemoteTabsPanelDataSource? {
         didSet {
             tableView.dataSource = tableViewDelegate
@@ -162,6 +162,8 @@ class RemoteTabsTableViewController: UITableViewController, Themeable {
         tableView.accessibilityIdentifier = AccessibilityIdentifiers.TabTray.syncedTabs
         listenForThemeChange(view)
         applyTheme()
+
+        refreshTabs(updateCache: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -173,8 +175,6 @@ class RemoteTabsTableViewController: UITableViewController, Themeable {
         if profile.hasSyncableAccount() && refreshControl == nil {
             addRefreshControl()
         }
-
-        refreshTabs(updateCache: true)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -221,7 +221,7 @@ class RemoteTabsTableViewController: UITableViewController, Themeable {
         }
     }
 
-    func updateDelegateClientAndTabData(_ clientAndTabs: [ClientAndTabs]) {
+    func updateDelegateClientAndTabData() {
         guard let remoteTabsPanel = remoteTabsPanel else { return }
 
         guard !clientAndTabs.isEmpty else {
@@ -248,45 +248,51 @@ class RemoteTabsTableViewController: UITableViewController, Themeable {
         tableView.reloadData()
     }
 
-    func refreshTabs(updateCache: Bool = false, completion: (() -> Void)? = nil) {
+    func refreshTabs(updateCache: Bool = false) {
+        // Calls to refresh tabs are made back to back
         guard let remoteTabsPanel = remoteTabsPanel else { return }
 
-        ensureMainThread { [self] in
-            // Short circuit if the user is not logged in
-            guard profile.hasSyncableAccount() else {
-                endRefreshing()
-                tableViewDelegate = RemoteTabsErrorDataSource(remoteTabsPanel: remoteTabsPanel,
-                                                              error: .notLoggedIn,
-                                                              theme: themeManager.currentTheme)
+        // Short circuit if the user is not logged in
+        guard profile.hasSyncableAccount() else {
+            endRefreshing()
+            tableViewDelegate = RemoteTabsErrorDataSource(remoteTabsPanel: remoteTabsPanel,
+                                                          error: .notLoggedIn,
+                                                          theme: themeManager.currentTheme)
+            return
+        }
+
+        // Get cached tabs.
+        profile.getCachedClientsAndTabs().uponQueue(.main) { [weak self] result in
+            guard let clientAndTabs = result.successValue else {
+                self?.endRefreshing()
+                self?.showFailedToSync()
                 return
             }
 
-            // Get cached tabs.
-            profile.getCachedClientsAndTabs().uponQueue(.main) { [weak self] result in
-                guard let clientAndTabs = result.successValue else {
-                    self?.endRefreshing()
-                    self?.showFailedToSync()
-                    return
+            self?.clientAndTabs = clientAndTabs
+            // Update UI with cached data.
+            ensureMainThread {
+                self?.updateDelegateClientAndTabData()
+                self?.endRefreshing()
+            }
+
+            if updateCache {
+                self?.getUpdatedClientAndTabs()
+            }
+        }
+    }
+
+    private func getUpdatedClientAndTabs() {
+        // Fetch updated tabs.
+        profile.getClientsAndTabs().uponQueue(.global(qos: .userInitiated)) { result in
+            DispatchQueue.main.async {
+                if let clientAndTabs = result.successValue {
+                    // Update UI with updated tabs.
+                    self.clientAndTabs = clientAndTabs
+                    self.updateDelegateClientAndTabData()
                 }
 
-                // Update UI with cached data.
-                self?.updateDelegateClientAndTabData(clientAndTabs)
-
-                if updateCache {
-                    // Fetch updated tabs.
-                    self?.profile.getClientsAndTabs().uponQueue(.main) { result in
-                        if let clientAndTabs = result.successValue {
-                            // Update UI with updated tabs.
-                            self?.updateDelegateClientAndTabData(clientAndTabs)
-                        }
-
-                        self?.endRefreshing()
-                        completion?()
-                    }
-                } else {
-                    self?.endRefreshing()
-                    completion?()
-                }
+                self.endRefreshing()
             }
         }
     }
