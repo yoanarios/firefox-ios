@@ -356,7 +356,7 @@
 "FirefoxHomepage.ContextualMenu.Settings.v101" = "设置";
 
 /* The title for the Sponsored Content context menu action for sponsored tiles in the Firefox home page shortcuts section. Clicking this brings the users to a support page where users can learn more about Sponsored content and how it works. */
-"FirefoxHomepage.ContextualMenu.SponsoredContent.v101" = "我们的赞助商﹠您的隐私";
+"FirefoxHomepage.ContextualMenu.SponsoredContent.v101" = "我们的赞助商＆您的隐私";
 
 /* Accessibility action title to open the synced tab for tab pickup on the Firefox homepage in the Jump Back In section. */
 "FirefoxHomepage.JumpBackIn.TabPickup.OpenTab.A11y.v106" = "打开同步的标签页";
@@ -727,9 +727,6 @@
 /* Title for the button that marks a reading list item as unread */
 "Mark as Unread" = "标记为未读";
 
-/* Long label for the add bookmark button displayed in the menu. Pressing this button bookmarks the current page. */
-"Menu.AddBookmark.AlternateLabel.v99" = "添加书签";
-
 /* Toast displayed to the user after a bookmark has been added. */
 "Menu.AddBookmark.Confirm" = "书签已添加";
 
@@ -813,9 +810,6 @@
 
 /* Toast displayed to the user after removing the item to the Shortcuts. */
 "Menu.RemovePin.Confirm2.v99" = "已从快捷方式移除";
-
-/* Long label for the remove from reading list button in the menu. Pressing this button removes the current page from the reading list. */
-"Menu.RemoveReadingList.AlternateLabel.v99" = "从阅读列表移除";
 
 /* Toast displayed to confirm to the user that his reading list item was correctly removed. */
 "Menu.RemoveReadingList.Confirm.v99" = "已从阅读列表移除";
