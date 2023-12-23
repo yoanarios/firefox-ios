@@ -510,12 +510,13 @@ export const FormAutofillHeuristics = {
 
     // We update the "name" fields to "cc-name" fields when the following
     // conditions are met:
-    // 1. The previous elements are identified as credit card fields and
-    //    cc-number is in it
-    // 2. There is no "cc-name-*" fields in the previous credit card elements
+    // 1. The preceding fields are identified as credit card fields and
+    //    contain the "cc-number" field.
+    // 2. No "cc-name-*" field is found among the preceding credit card fields.
+    // 3. The "cc-csc" field is not present among the preceding credit card fields.
     if (
       ["cc-number"].some(f => prevCCFields.has(f)) &&
-      !["cc-name", "cc-given-name", "cc-family-name"].some(f =>
+      !["cc-name", "cc-given-name", "cc-family-name", "cc-csc"].some(f =>
         prevCCFields.has(f)
       )
     ) {
@@ -830,12 +831,13 @@ export const FormAutofillHeuristics = {
       }
 
       // At least two options match the country name, otherwise some state name might
-      // also match a country name, ex, Georgia
+      // also match a country name, ex, Georgia. We check the last two
+      // options rather than the first, as selects often start with a non-country display option.
       const countryDisplayNames = Array.from(FormAutofill.countries.values());
       if (
         options.length >= 2 &&
         options
-          .slice(0, 2)
+          .slice(-2)
           .every(
             option =>
               countryDisplayNames.includes(option.value) ||
