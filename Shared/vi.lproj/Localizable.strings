@@ -473,7 +473,7 @@
 "HomePanel.ContextMenu.DeleteFromHistory" = "Xóa khỏi lịch sử";
 
 /* The title for the Open in New Private Tab context menu action for sites in Home Panels */
-"HomePanel.ContextMenu.OpenInNewPrivateTab.v101" = "Mở trong một thẻ riêng tư";
+"HomePanel.ContextMenu.OpenInNewPrivateTab.v101" = "Mở trong thẻ riêng tư";
 
 /* The title for the Open in New Tab context menu action for sites in Home Panels */
 "HomePanel.ContextMenu.OpenInNewTab" = "Mở trong thẻ mới";
@@ -693,9 +693,6 @@
 
 /* Placeholder test for search box in logins list view. */
 "LoginsList.LoginsListSearchPlaceholder" = "Bộ lọc";
-
-/* Label shown when there are no logins to list */
-"LoginsList.NoLoginsFound.Description" = "Thông tin đăng nhập đã lưu sẽ hiển thị ở đây. Nếu bạn đã lưu thông tin đăng nhập của mình vào Firefox trên một thiết bị khác, hãy đăng nhập vào tài khoản Firefox của bạn.";
 
 /* Label shown when there are no logins to list. The placeholder will be replaced with the app name. */
 "LoginsList.NoLoginsFound.Description.v119" = "Thông tin đăng nhập đã lưu sẽ hiển thị ở đây. Nếu bạn đã lưu thông tin đăng nhập của mình vào %@ trên thiết bị khác, hãy đăng nhập vào tài khoản của bạn.";
@@ -1069,15 +1066,6 @@
 /* The confirmation button */
 "Search.ThirdPartyEngines.OK" = "OK";
 
-/* Accessibility label for default search engine setting. */
-"SearchSettings.Accessibility.DefaultSearchEngine.v106" = "Công cụ tìm kiếm mặc định";
-
-/* Title for default search engine settings section. */
-"SearchSettings.Title.DefaultSearchEngine.v106" = "Công cụ tìm kiếm mặc định";
-
-/* Navigation title for search settings. */
-"SearchSettings.Title.Search.v106" = "Tìm kiếm";
-
 /* Message displayed in the crash dialog above the buttons used to select when sending reports */
 "Send a crash report so Mozilla can fix the problem?" = "Gửi báo cáo lỗi để Mozilla có thể khắc phục sự cố?";
 
@@ -1163,7 +1151,7 @@
 "Settings.AddCustomEngine.TitleLabel" = "Tiêu đề";
 
 /* The placeholder for Title Field when saving a custom search engine. */
-"Settings.AddCustomEngine.TitlePlaceholder" = "Máy tìm kiếm";
+"Settings.AddCustomEngine.TitlePlaceholder" = "Công cụ tìm kiếm";
 
 /* The title for URL Field */
 "Settings.AddCustomEngine.URLLabel" = "URL";
