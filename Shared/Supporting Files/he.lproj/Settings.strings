@@ -29,7 +29,7 @@
 "CreditCards.Settings.UseASavedCard.v112" = "להשתמש בכרטיס שמור?";
 
 /* When a user is in the process of making a purchase, and has at least one saved card, we show this label inside the keyboard hint. This indicates to the user that there are stored cards available for use on this pending purchase. */
-"CreditCards.Settings.UseSavedCardFromKeyboard.v112" = "שימוש בכרטיס שמור";
+"CreditCards.Settings.UseSavedCardFromKeyboard.v112" = "שימוש בכרטיס השמור";
 
 /* Settings section title for the old Firefox account */
 "FxA.FirefoxAccount.v119" = "חשבון";
@@ -45,6 +45,9 @@
 
 /* This is the footer title informing the user needs to turn on notifications in iOS Settings. Both placeholders will be replaced with the app name. */
 "Settings.Notifications.SystemNotificationsDisabledMessage.v112" = "כיבית את כל ההתראות של %1$@. יש להפעיל אותם על־ידי מעבר להגדרות המכשיר > התראות > %2$@";
+
+/* This is the description for the setting that toggles Tips and Features feature in the settings menu under the Notifications section. The placeholder will be replaced with the app name. */
+"Settings.Notifications.TipsAndFeaturesNotificationsStatus.v112" = "מידע נוסף על תכונות שימושיות ועל כיצד להפיק את המרב מ־%@.";
 
 /* This is the title for the setting that toggles Tips and Features feature in the settings menu under the Notifications section. */
 "Settings.Notifications.TipsAndFeaturesNotificationsTitle.v112" = "עצות ותכונות";
